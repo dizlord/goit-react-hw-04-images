@@ -1,16 +1,14 @@
 import { createPortal } from 'react-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
 const Modal = ({ modalImage, closeModal }) => {
-  const closeModalRef = useRef(closeModal);
-
   useEffect(() => {
     const closeByESC = e => {
       if (e.code === 'Escape') {
-        closeModalRef.current();
+        closeModal();
       }
     };
     window.addEventListener('keydown', closeByESC);
@@ -18,7 +16,7 @@ const Modal = ({ modalImage, closeModal }) => {
     return () => {
       window.removeEventListener('keydown', closeByESC);
     };
-  }, []);
+  }, [closeModal]);
 
   return createPortal(
     <div
